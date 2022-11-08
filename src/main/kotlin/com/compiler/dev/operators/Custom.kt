@@ -1,17 +1,20 @@
 package com.compiler.dev.operators
 
+import com.compiler.dev.annotations.Feature
 import com.compiler.dev.annotations.Operator
 import com.compiler.dev.annotations.Operator.Types
-import com.compiler.dev.structures.DataObject
 import com.compiler.dev.structures.Empty
+import com.compiler.dev.structures.Map
 
 
- @Operator
- fun delete(obj : DataObject, name : String): () -> Unit = {
+@Feature
+@Operator
+ fun delete(obj : Map<Any>, name : String): () -> Unit = {
     obj[name] = Empty()
 }
 
-@Operator(Types.Object)
+@Feature
+@Operator(Types.Argument)
 fun print(obj : Any): () -> Unit = {
     print(obj)
 }
