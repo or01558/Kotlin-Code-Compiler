@@ -3,7 +3,20 @@ package com.compiler.dev.runtime
 import com.compiler.dev.api.Feature
 import com.compiler.dev.classes.Code
 import com.compiler.dev.classes.IResource
-
+import com.compiler.dev.classes.resources.Expression
+import com.compiler.dev.classes.resources.Loop
+import com.compiler.dev.classes.resources.Operator
+import com.compiler.dev.classes.resources.Variable
+import com.compiler.dev.classes.resources.expressions.ElseExpression
+import com.compiler.dev.classes.resources.expressions.IfExpression
+import com.compiler.dev.classes.resources.expressions.TryCatchExpression
+import com.compiler.dev.classes.resources.expressions.functions.LambdaExpression
+import com.compiler.dev.classes.resources.loops.DoWhileLoop
+import com.compiler.dev.classes.resources.loops.ForLoop
+import com.compiler.dev.classes.resources.loops.WhileLoop
+import com.compiler.dev.classes.resources.operators.GetOperator
+import com.compiler.dev.classes.resources.operators.SetOperator
+import org.jetbrains.kotlin.serialization.js.ast.JsAstProtoBuf
 
 
 /**
@@ -18,14 +31,47 @@ import com.compiler.dev.classes.IResource
  * The root folder path of the kotlin project must be inside the src/main/kotlin folder, for example, com/dev/myproject
  * Use . for src/main/kotlin folder
  */
-class Compiler(val root : String){
+class Compiler(private val root : String){
 
 
-  lateinit var rootFolder : String
-  val features : MutableList<Feature> = mutableListOf()
-  val resources : MutableList<IResource> = mutableListOf()
+  private var rootFolder : String
+  private var features : MutableList<Feature>
+  private var resources : MutableList<IResource>
 
+  init {
+      val systemDir =  System.getProperty("user.dir");
+      rootFolder = if(root == ".") {
+         "$systemDir\\src\\main\\kotlin"
+      } else root
+      features = mutableListOf()
+      resources =  mutableListOf()
 
+  }
+
+    /**
+     * Adds new code resource
+     * to the compiler's resources. The resource should be an implement the IResource interface.
+     * Please note that in order for this to work you must have an Custom Resource class too.
+     *
+     * @param resource
+     * your custom code's resource for the compiler runtime process, for example, class MyResource() : IResource
+     */
+    open fun run() {
+        addResource(Variable)
+        addResource(Operator)
+        addResource(SetOperator)
+        addResource(GetOperator)
+        addResource(Expression)
+        addResource(IfExpression)
+        addResource(ElseExpression)
+        addResource(TryCatchExpression)
+        addResource(LambdaExpression)
+        addResource(Loop)
+        addResource(ForLoop)
+        addResource(DoWhileLoop)
+        addResource(WhileLoop)
+        TODO("READ FOLDERS AMD FILES")
+    }
 
    /**
     * Adds new code resource

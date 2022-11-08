@@ -14,7 +14,7 @@ open class Body(): Part(){
 
 interface IResource {
     val declaration : ResourceDeclaration
-    fun createNew(startLine : String, originalCode: String, lines : List<String>)
+    fun createNew(startLine : String, originalCode: String, lines : List<String>) : Resource?
 }
 
 
@@ -28,10 +28,9 @@ open abstract class Resource(val name : String, val declaration : Declaration? =
         override val declaration: ResourceDeclaration
             get() = TODO("Not yet implemented")
 
-        override fun createNew(startLine: String, originalCode: String, lines: List<String>) {
+        override fun createNew(startLine: String, originalCode: String, lines: List<String>): Resource? {
             TODO("Not yet implemented")
         }
-
     }
 
      var lines : List<String> = ArrayList()
